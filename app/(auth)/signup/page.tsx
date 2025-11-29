@@ -6,7 +6,9 @@ import { authApi } from '@/lib/api'; // Uses the centralized API service
 import Link from 'next/link';
 
 export default function SignupPage() {
-  const [name, setName] = useState('');
+  // UPDATED: Replaced 'name' state with 'firstName' and 'lastName'
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -18,14 +20,20 @@ export default function SignupPage() {
     setError('');
     setSuccess('');
 
-    // Basic validation (e.g., check for simple password strength in a real app)
+    // Basic validation
     if (password.length < 6) {
         setError('Password must be at least 6 characters long.');
         return;
     }
+    // Added check for required firstName
+    if (!firstName) {
+        setError('First Name is required.');
+        return;
+    }
 
     try {
-      const userData = { name, email, password };
+      // UPDATED: Sending data to match the CreateUserDto
+      const userData = { firstName, lastName, email, password };
       
       // Call the API endpoint defined in lib/api.ts
       await authApi.signup(userData);
@@ -49,16 +57,29 @@ export default function SignupPage() {
       <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">Create Account</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         
-        {/* Name Input */}
-        <div>
-          <label className="block mb-1 font-medium text-gray-700">Name:</label>
-          <input 
-            type="text" 
-            value={name} 
-            onChange={(e) => setName(e.target.value)} 
-            required 
-            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-red-500 focus:border-red-500" 
-          />
+        <div className="flex gap-4">
+            {/* First Name Input (Required) */}
+            <div className="w-1/2">
+                <label className="block mb-1 font-medium text-gray-700">First Name:</label>
+                <input 
+                    type="text" 
+                    value={firstName} 
+                    onChange={(e) => setFirstName(e.target.value)} 
+                    required 
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-red-500 focus:border-red-500" 
+                />
+            </div>
+
+            {/* Last Name Input (Optional) */}
+            <div className="w-1/2">
+                <label className="block mb-1 font-medium text-gray-700">Last Name (Optional):</label>
+                <input 
+                    type="text" 
+                    value={lastName} 
+                    onChange={(e) => setLastName(e.target.value)} 
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-red-500 focus:border-red-500" 
+                />
+            </div>
         </div>
 
         {/* Email Input */}

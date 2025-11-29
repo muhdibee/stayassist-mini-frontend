@@ -1,65 +1,129 @@
-import Image from "next/image";
+'use client';
 
-export default function Home() {
+import { useRouter } from 'next/navigation';
+import SearchBar from '@/components/SearchBar'; // Import the previously created SearchBar
+import Link from 'next/link';
+
+export default function HomePage() {
+  const router = useRouter();
+
+  // Function to handle the search parameters and redirect to the listings page
+  const handleSearch = (searchData: { city: string, checkIn: string, checkOut: string }) => {
+    // Construct the query string from the search data
+    const params = new URLSearchParams();
+    if (searchData.city) params.append('city', searchData.city);
+    if (searchData.checkIn) params.append('checkIn', searchData.checkIn);
+    if (searchData.checkOut) params.append('checkOut', searchData.checkOut);
+
+    // Redirect to the main listings page with search parameters
+    router.push(`/listings?${params.toString()}`);
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <main className="min-h-screen bg-gray-50 pb-20">
+      
+      {/* Hero Section - Now with Video Background */}
+      <div className="relative h-[80vh] flex items-center justify-center text-white overflow-hidden">
+        
+        {/* Video Element */}
+        <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover z-0"
+            // Fallback style if video doesn't load
+            style={{ backgroundColor: '#ef4444' }} 
+        >
+            <source src="https://assets.mixkit.co/videos/25001/25001-720.mp4" type="video/mp4" /> 
+        </video>
+        
+        {/* Dark Overlay to ensure text readability */}
+        <div className="absolute inset-0 bg-black opacity-40 z-10"></div>
+
+        {/* Text Content */}
+        <div className="text-center p-4 relative z-20">
+          <h1 className="text-5xl font-extrabold mb-4 animate-fadeIn">
+            Find Your Next Great Stay
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="text-xl opacity-90 mb-8">
+            The perfect accommodation is just a search away.
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </div>
+      
+      {/* Search Bar Container */}
+      {/* Positioned slightly above the fold of the Hero section using negative margin */}
+      <div className="-mt-16 relative z-30 container mx-auto px-4 sm:px-6 lg:px-8">
+        <SearchBar onSearch={handleSearch} />
+      </div>
+
+      {/* Featured Listings/Call to Action Section */}
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 mt-12">
+        <h2 className="text-3xl font-bold text-gray-800 mb-6 border-b pb-2">
+          Featured Destinations
+        </h2>
+        
+        <p className="text-gray-600 mb-8">
+          Explore top-rated places hand-picked by our community.
+        </p>
+
+        {/* Call to Action Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100">
+            <h3 className="text-xl font-semibold text-red-500 mb-2">Become a Host</h3>
+            <p className="text-gray-600 mb-4">
+              Earn money by sharing your space with travelers. It's simple and secure.
+            </p>
+            <Link 
+                href="/create-listing" 
+                className="inline-block px-4 py-2 text-sm bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
+            >
+                Start Listing Today
+            </Link>
+          </div>
+          
+          <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100">
+            <h3 className="text-xl font-semibold text-red-500 mb-2">Exclusive Deals</h3>
+            <p className="text-gray-600 mb-4">
+              Sign up for our newsletter to get access to exclusive, limited-time offers.
+            </p>
+            <button 
+                className="inline-block px-4 py-2 text-sm bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 transition-colors"
+            >
+                Subscribe Now
+            </button>
+          </div>
+
+          <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100">
+            <h3 className="text-xl font-semibold text-red-500 mb-2">Help & Support</h3>
+            <p className="text-gray-600 mb-4">
+              Need assistance with booking or hosting? Our support team is here 24/7.
+            </p>
+            <Link 
+                href="/contact" 
+                className="inline-block px-4 py-2 text-sm bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 transition-colors"
+            >
+                Get Support
+            </Link>
+          </div>
         </div>
-      </main>
-    </div>
+      </div>
+      
+      {/* Add a simple style block for the decorative pattern */}
+      <style jsx global>{`
+        .bg-pattern {
+          background-image: radial-gradient(#fff 1px, transparent 1px);
+          background-size: 8px 8px;
+        }
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fadeIn {
+          animation: fadeIn 1s ease-out;
+        }
+      `}</style>
+    </main>
   );
 }

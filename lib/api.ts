@@ -58,6 +58,7 @@ export const listingsApi = {
   // Accepts search parameters for the Listings and Search requirement (3)
   getAll: (searchParams: any = {}) => api.get('/listings', { params: searchParams }),
   getOne: (id: string) => api.get(`/listings/${id}`),
+  create: (listingData: any) => api.post('/listings', listingData),
 };
 
 export const bookingApi = {
