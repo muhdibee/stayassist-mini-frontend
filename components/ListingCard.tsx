@@ -8,7 +8,7 @@ interface Listing {
   title: string;
   pricePerNight: number;
   city: string;
-  photos: string[]; // Array of photo URLs
+  photoUrls: string[]; // Array of photo URLs
   hostName: string;
 }
 
@@ -20,7 +20,7 @@ interface ListingCardProps {
 const PLACEHOLDER_IMG = 'https://placehold.co/400x300/e5e7eb/6b7280?text=StayAssist';
 
 export default function ListingCard({ listing }: ListingCardProps) {
-  const imageUrl = listing.photos?.[0] || PLACEHOLDER_IMG;
+  const imageUrl = listing.photoUrls?.[0] || PLACEHOLDER_IMG;
 
   return (
     <Link 

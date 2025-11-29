@@ -6,13 +6,12 @@ import SearchBar from '@/components/SearchBar';
 import ListingCard from '@/components/ListingCard'; // You need to create this component
 
 interface Listing {
-  _id: string; // Use _id if you chose MongoDB, or id if PostgreSQL/MySQL
+  _id: string; 
   title: string;
   pricePerNight: number;
   city: string;
-  photos: string[]; 
+  photoUrls: string[]; 
   hostName: string;
-  // ... other fields
 }
 
 export default function ListingsPage() {
@@ -25,9 +24,10 @@ export default function ListingsPage() {
     setLoading(true);
     setError('');
     try {
-      // Send parameters to your backend for city and date filtering (Search requirement 3)
+      // Send parameters to your backend for city and date filtering
       const response = await listingsApi.getAll(params);
-      setListings(response.data.data); 
+      console.log('Fetched listings:', response.data);
+      setListings(response.data); 
     } catch (err: any) {
       setError('Failed to fetch listings. Please try again.');
     } finally {
@@ -54,17 +54,17 @@ export default function ListingsPage() {
 
   return (
     <div className="container mx-auto p-4">
-      {/* <SearchBar onSearch={handleSearch} /> Search bar at the top */}
+      <SearchBar onSearch={handleSearch} /> Search bar at the top
       <h1 className="text-3xl font-bold my-6">Available Rentals</h1>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {/* {listings.length > 0 ? (
+        {listings.length > 0 ? (
           listings.map((listing) => (
             <ListingCard key={listing._id} listing={listing} /> // You'll create this card
           ))
         ) : (
           <p>No listings found matching your search criteria.</p>
-        )} */}
+        )}
       </div>
     </div>
   );
