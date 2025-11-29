@@ -22,7 +22,8 @@ export default function ListingDetailsPage() {
     const fetchListing = async () => {
       try {
         const response = await listingsApi.getOne(listingId);
-        setListing(response.data.data); // Adjust to match your API response
+        setListing(response.data); 
+        console.log('Fetched listings:', response.data);
       } catch (err) {
         setError('Failed to load listing details.');
       } finally {
@@ -44,11 +45,11 @@ export default function ListingDetailsPage() {
       <div className="lg:col-span-2">
         {/* Placeholder for images (Photos URL requirement) */}
         <div className="mb-6 rounded-lg overflow-hidden border">
-            <img src={listing.photos[0] || 'placeholder-url'} alt={listing.title} className="w-full h-96 object-cover" />
+            <img src={listing.photoUrls[0] || 'placeholder-url'} alt={listing.title} className="w-full h-96 object-cover" />
         </div>
         
         <h1 className="text-4xl font-extrabold mb-2">{listing.title}</h1>
-        <p className="text-xl text-gray-600 mb-4">{listing.city} &middot; Hosted by **{listing.hostName}**</p>
+        <p className="text-xl text-gray-600 mb-4">{listing.city} &middot; Hosted by <b>{listing.hostName}</b></p>
         
         <hr className="my-6" />
 
@@ -59,7 +60,7 @@ export default function ListingDetailsPage() {
       {/* Booking Component (1/3 width) */}
       <div className="lg:col-span-1 sticky top-4 self-start border p-6 rounded-lg shadow-xl">
         <div className="flex justify-between items-baseline mb-4">
-            <span className="text-3xl font-bold">${listing.pricePerNight}</span>
+            <span className="text-3xl font-bold">₦{listing.pricePerNight}</span>
             <span className="text-lg text-gray-600">/ night</span>
         </div>
         <hr className="mb-4" />
