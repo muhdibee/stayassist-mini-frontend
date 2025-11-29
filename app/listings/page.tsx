@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { listingsApi } from '@/lib/api';
 import SearchBar from '@/components/SearchBar';
-// import ListingCard from '@/components/ListingCard'; // You need to create this component
+import ListingCard from '@/components/ListingCard'; // You need to create this component
 
 interface Listing {
   _id: string; // Use _id if you chose MongoDB, or id if PostgreSQL/MySQL
