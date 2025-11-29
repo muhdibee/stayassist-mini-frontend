@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { listingsApi } from '@/lib/api';
-// import SearchBar from '@/components/SearchBar'; // You need to create this component
+import SearchBar from '@/components/SearchBar';
 // import ListingCard from '@/components/ListingCard'; // You need to create this component
 
 interface Listing {

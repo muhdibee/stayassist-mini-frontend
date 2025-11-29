@@ -4,13 +4,16 @@
 import { useState, useEffect } from 'react';
 import { listingsApi } from '@/lib/api';
 import BookingForm from '@/components/BookingForm'; // You need to create this component
+import { useParams } from 'next/navigation';
 
 interface ListingDetailProps {
   params: { id: string }; // Matches the dynamic route name
 }
 
-export default function ListingDetailsPage({ params }: ListingDetailProps) {
-  const listingId = params.id;
+export default function ListingDetailsPage() {
+  const params = useParams();
+  const listingId = Array.isArray(params.id) ? params.id[0] : (params.id as string);
+
   const [listing, setListing] = useState<any>(null); // Use 'any' for simplicity here
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -26,7 +29,9 @@ export default function ListingDetailsPage({ params }: ListingDetailProps) {
         setLoading(false);
       }
     };
-    fetchListing();
+    if (listingId) {
+      fetchListing();
+    }
   }, [listingId]);
 
   if (loading) return <p className="text-center mt-20">Loading property details...</p>;
