@@ -11,8 +11,8 @@ interface NewListingData {
   description: string;
   pricePerNight: number;
   city: string;
-  hostName: string;
-  photoUrls: string[]; // URLs of photos
+  // CORRECTED: Using the backend's expected field name
+  photoUrls: string[]; 
 }
 
 export default function CreateListingPage() {
@@ -22,8 +22,8 @@ export default function CreateListingPage() {
     description: '',
     pricePerNight: 0,
     city: '',
-    hostName: '',
-    photoUrls: [], // Initialize with one empty string for the first photo URL
+    // CORRECTED: Using the backend's expected field name
+    photoUrls: [''], 
   });
   
   const [loading, setLoading] = useState(false);
@@ -41,11 +41,12 @@ export default function CreateListingPage() {
 
   // Handle changes for the photo URL input array
   const handlePhotoChange = (index: number, value: string) => {
-    const newPhotos = [...formData.photos];
-    newPhotos[index] = value;
+    // CORRECTED: Accessing and setting the correct 'photoUrls' property
+    const newPhotoUrls = [...formData.photoUrls];
+    newPhotoUrls[index] = value;
     setFormData((prev) => ({
       ...prev,
-      photos: newPhotos,
+      photoUrls: newPhotoUrls,
     }));
   };
 
@@ -53,7 +54,8 @@ export default function CreateListingPage() {
   const addPhotoInput = () => {
     setFormData((prev) => ({
       ...prev,
-      photos: [...prev.photos, ''],
+      // CORRECTED: Accessing the correct 'photoUrls' property
+      photoUrls: [...prev.photoUrls, ''], 
     }));
   };
 
@@ -74,7 +76,8 @@ export default function CreateListingPage() {
       // Filter out empty photo URLs before submission
       const dataToSubmit = {
         ...formData,
-        photos: formData.photos.filter(url => url.trim() !== ''),
+        // The API call now uses the corrected 'photoUrls' property from the state
+        photoUrls: formData.photoUrls.filter(url => url.trim() !== ''),
       };
 
       // The backend expects an object matching the NewListingData structure
@@ -163,19 +166,6 @@ export default function CreateListingPage() {
             />
           </div>
           
-          {/* Host Name */}
-          <div>
-            <label htmlFor="hostName" className="block mb-1 font-semibold text-gray-700">Host Name</label>
-            <input 
-              type="text" 
-              id="hostName" 
-              name="hostName"
-              value={formData.hostName} 
-              onChange={handleChange} 
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-red-500 focus:border-red-500" 
-              placeholder="Your name"
-            />
-          </div>
         </div>
 
         {/* Photos (URLs) */}
