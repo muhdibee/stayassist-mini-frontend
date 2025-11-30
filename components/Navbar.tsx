@@ -16,6 +16,7 @@ export default function Navbar() {
   const primaryLinks = [
     { href: '/', label: 'Home', Icon: Home },
     { href: '/listings', label: 'Listings', Icon: Compass },
+    { href: '/my-bookings', label: 'My Bookings', Icon: CalendarCheck },
   ];
 
   // UPDATED: This is now an empty array, so My Bookings is not in the primary navigation area.
