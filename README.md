@@ -29,6 +29,7 @@ backend API.
 ### **Booking Functionality**
 
 -   Create bookings via `bookingApi.create`
+-   **My bookings page (`/my-bookings`)**: Authenticated users can manage their past reservations
 -   Dedicated **My Bookings** section with clean date formatting and
     quick navigation
 
@@ -57,16 +58,16 @@ backend API.
 ### **Prerequisites**
 
 -   Node.js (LTS recommended)
--   A running instance of the StayFinder Backend API\
-    (configured at: `http://localhost:4000/api/` inside `lib/api.ts`)
+-   A running instance of the StayAssist Backend API\
+    (configured at: `https://stayassist-mini-backend.up.railway.app/api` or on `http://localhost:4000/api` inside `lib/api.ts`)
 
 ### **Steps**
 
 #### 1. **Clone the Repository**
 
 ``` bash
-git clone [your-repo-url]
-cd stayfinder-frontend
+git clone https://github.com/muhdibee/stayassist-mini-frontend
+cd stayassist-mini-frontend
 ```
 
 #### 2. **Install Dependencies**
@@ -75,6 +76,12 @@ cd stayfinder-frontend
 npm install
 # or
 yarn install
+```
+
+#### 3. **Run Application**
+
+``` bash
+npm run start:dev
 ```
 
 ------------------------------------------------------------------------
