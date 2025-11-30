@@ -3,7 +3,7 @@ import Navbar from '@/components/Navbar'; // Import the site-wide Navbar
 
 // Metadata is standard for Next.js root layout
 export const metadata = {
-  title: 'StayFinder - Find Your Perfect Accommodation',
+  title: 'StayAssist - Find Your Perfect Accommodation',
   description: 'Book short-term rentals and unique places to stay.',
 };
 

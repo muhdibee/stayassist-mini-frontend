@@ -37,7 +37,7 @@ export default function ListingCard({ listing }: ListingCardProps) {
         />
         {/* Price Tag Overlay */}
         <div className="absolute top-2 right-2 bg-white text-gray-900 font-bold py-1 px-3 rounded-full shadow-md">
-            ₦{listing.pricePerNight} / night
+            ${listing.pricePerNight} / night
         </div>
       </div>
 

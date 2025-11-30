@@ -60,7 +60,7 @@ export default function ListingDetailsPage() {
       {/* Booking Component (1/3 width) */}
       <div className="lg:col-span-1 sticky top-4 self-start border p-6 rounded-lg shadow-xl">
         <div className="flex justify-between items-baseline mb-4">
-            <span className="text-3xl font-bold">₦{listing.pricePerNight}</span>
+            <span className="text-3xl font-bold">${listing.pricePerNight}</span>
             <span className="text-lg text-gray-600">/ night</span>
         </div>
         <hr className="mb-4" />

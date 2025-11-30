@@ -33,7 +33,7 @@ export default function BookingForm({ listingId, pricePerNight }: BookingFormPro
     setMessage('');
     
     if (days <= 0) {
-        setMessage('❌ Please select valid check-in and check-out dates.');
+        setMessage('Please select valid check-in and check-out dates.');
         return;
     }
     
@@ -51,9 +51,9 @@ export default function BookingForm({ listingId, pricePerNight }: BookingFormPro
       // In a real app, you would redirect to a confirmation page here
     } catch (err: any) {
       if (err.response?.status === 401) {
-          setMessage('❌ Login required to make a booking.');
+          setMessage('Login required to make a booking.');
       } else {
-          setMessage(err.response?.data?.message || '❌ Booking failed. Please try again.');
+          setMessage(err.response?.data?.message || 'Booking failed. Please try again.');
       }
     }
   };

@@ -1,36 +1,88 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# StayAssist - Modern Accommodation Booking Platform (Frontend)
 
-## Getting Started
+StayAssist is a modern, responsive web application that serves as the
+frontend for a property rental and booking service. It allows users to
+browse listings, view property details, create listings as hosts, manage
+bookings, and handle authentication --- all powered by a dedicated
+backend API.
 
-First, run the development server:
+------------------------------------------------------------------------
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 🚀 Key Features
+
+### **Authentication & User Management**
+
+-   User **registration** (`/signup`) and **login** (`/login`)
+-   Secure API interactions using **JWT tokens** (handled via cookies)
+-   **My Bookings** page for authenticated users displaying reservation
+    history
+
+### **Listing Management & Discovery**
+
+-   **Home Page (`/`)**: Search bar + 4 featured listings fetched from
+    API
+-   **Listings Page (`/listings`)**: Main property browsing area
+-   **Detail View (`/listings/:id`)**: Full property information
+-   **Host Tools (`/create-listing`)**: Authenticated users can add new
+    listings
+
+### **Booking Functionality**
+
+-   Create bookings via `bookingApi.create`
+-   Dedicated **My Bookings** section with clean date formatting and
+    quick navigation
+
+### **Responsive UI**
+
+-   Built with **Next.js**, **Tailwind CSS**, and **React**
+-   Works seamlessly across mobile, tablet, and desktop screens
+
+------------------------------------------------------------------------
+
+## 💻 Technology Stack
+
+  Category           Technologies Used
+  ------------------ -----------------------------
+  Framework          Next.js (App Router)
+  Language           TypeScript
+  Styling            Tailwind CSS
+  Components         React Functional Components
+  API Client         Axios
+  State Management   React Hooks
+
+------------------------------------------------------------------------
+
+## 🛠️ Setup & Installation
+
+### **Prerequisites**
+
+-   Node.js (LTS recommended)
+-   A running instance of the StayFinder Backend API\
+    (configured at: `http://localhost:4000/api/` inside `lib/api.ts`)
+
+### **Steps**
+
+#### 1. **Clone the Repository**
+
+``` bash
+git clone [your-repo-url]
+cd stayfinder-frontend
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+#### 2. **Install Dependencies**
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+``` bash
+npm install
+# or
+yarn install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+------------------------------------------------------------------------
 
-## Learn More
+## 📌 Notes
 
-To learn more about Next.js, take a look at the following resources:
+This project is a fully client-side application designed to plug
+directly into the StayAssist backend.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+------------------------------------------------------------------------
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
