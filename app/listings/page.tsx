@@ -54,7 +54,7 @@ export default function ListingsPage() {
 
   return (
     <div className="container mx-auto p-4">
-      <SearchBar onSearch={handleSearch} /> Search bar at the top
+      <SearchBar onSearch={handleSearch} />
       <h1 className="text-3xl font-bold my-6">Available Rentals</h1>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">

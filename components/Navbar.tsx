@@ -3,11 +3,11 @@
 import { useState } from 'react';
 import Link from 'next/link';
 // Icon imports for a cleaner look
-import { Menu, X, Home, Compass, User, LogIn, PlusCircle } from 'lucide-react';
+import { Menu, X, Home, Compass, User, LogIn, PlusCircle, CalendarCheck } from 'lucide-react'; // Added CalendarCheck
 
 // You would typically fetch and check authentication state here
-// For demonstration, we'll assume a state
-const isAuthenticated = false; // Replace with actual auth context/hook
+// We keep this variable but its conditional logic is now ignored for authLinks as requested.
+const isAuthenticated = true; 
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,17 +18,30 @@ export default function Navbar() {
     { href: '/listings', label: 'Listings', Icon: Compass },
   ];
 
-  const authLinks = isAuthenticated
-    ? [
-        { href: '/profile', label: 'Profile', Icon: User },
-        { href: '/logout', label: 'Logout', Icon: LogIn }, // Logout action would be handled in the component
-      ]
-    : [
-        { href: '/login', label: 'Login', Icon: LogIn },
-        { href: '/signup', label: 'Sign Up', Icon: User },
-      ];
+  // UPDATED: This is now an empty array, so My Bookings is not in the primary navigation area.
+  const authenticatedLinks: any = []; 
+  
+  // UPDATED: Show only Login and Sign Up links, regardless of the isAuthenticated status.
+  const authLinks = [
+    { href: '/login', label: 'Login', Icon: LogIn },
+    { href: '/signup', label: 'Sign Up', Icon: User },
+  ];
 
   const hostLink = { href: '/create-listing', label: 'Host', Icon: PlusCircle };
+
+  // Combine primary and authenticated links for desktop (authenticatedLinks is now always empty)
+  const desktopNavLinks = [
+    ...primaryLinks,
+    ...authenticatedLinks
+  ];
+
+  // Combine all links for mobile
+  const mobileNavLinks = [
+    ...primaryLinks, 
+    ...authenticatedLinks,
+    hostLink, 
+    ...authLinks
+  ];
 
   return (
     <nav className="bg-white shadow-md sticky top-0 z-50">
@@ -38,7 +51,7 @@ export default function Navbar() {
           {/* Logo/Brand */}
           <div className="flex-shrink-0">
             <Link href="/" className="text-2xl font-extrabold text-red-600 hover:text-red-700 transition-colors">
-              Stay<span className="text-gray-800">Assist</span>
+              Stay<span className="text-gray-800">Finder</span>
             </Link>
           </div>
 
@@ -46,7 +59,7 @@ export default function Navbar() {
           <div className="hidden md:flex md:items-center space-x-6">
             
             {/* Primary Links */}
-            {primaryLinks.map((link) => (
+            {desktopNavLinks.map((link) => ( 
               <Link
                 key={link.href}
                 href={link.href}
@@ -65,7 +78,7 @@ export default function Navbar() {
               Become a Host
             </Link>
 
-            {/* Auth Links */}
+            {/* Auth Links (Always Login and Sign Up) */}
             <div className="flex space-x-2">
                 {authLinks.map((link) => (
                     <Link
@@ -97,7 +110,7 @@ export default function Navbar() {
         <div className="md:hidden">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t">
             {/* All links in mobile view */}
-            {[...primaryLinks, hostLink, ...authLinks].map((link) => (
+            {mobileNavLinks.map((link) => ( 
               <Link
                 key={link.href}
                 href={link.href}
