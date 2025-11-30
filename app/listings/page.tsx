@@ -30,10 +30,10 @@ export default function ListingsPage() {
       // Send parameters to your backend for city and date filtering
       const response = await listingsApi.getAll(params);
       console.log('Fetched listings:', response.data);
-              setError(`Failed to fetch listings from ${BACKEND_URL}. Please try again.`);
+      console.log(`Failed to fetch listings from ${BACKEND_URL}. Please try again.`);
       setListings(response.data); 
     } catch (err: any) {
-        setError(`Failed to fetch listings from ${BACKEND_URL}. Please try again.`);
+      console.log(`Failed to fetch listings from ${BACKEND_URL}. Please try again.`);
       setError('Failed to fetch listings. Please try again.');
     } finally {
       setLoading(false);

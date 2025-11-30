@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 // Replace with the URL where your Node.js backend is running (e.g., port 3000)
 
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
+  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL, //https://stayassist-mini-backend.up.railway.app/api
   headers: {
     'Content-Type': 'application/json',
   },
