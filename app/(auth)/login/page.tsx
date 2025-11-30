@@ -41,7 +41,7 @@ export default function LoginPage() {
         
         {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
         
-        <button type="submit" className="bg-blue-600 text-white p-3 w-full rounded font-semibold hover:bg-blue-700 transition-colors">
+        <button type="submit" className="bg-red-500 text-white p-3 w-full rounded-lg font-semibold shadow-md hover:bg-red-600 transition-colors">
           Log In
         </button>
       </form>
