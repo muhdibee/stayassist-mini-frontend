@@ -11,7 +11,7 @@ interface NewListingData {
   description: string;
   pricePerNight: number;
   city: string;
-  // CORRECTED: Using the backend's expected field name
+  hostName: string; // Ensure this matches the interface
   photoUrls: string[]; 
 }
 
@@ -22,7 +22,7 @@ export default function CreateListingPage() {
     description: '',
     pricePerNight: 0,
     city: '',
-    // CORRECTED: Using the backend's expected field name
+    hostName: '', // FIX: Added missing hostName back to initial state
     photoUrls: [''], 
   });
   
@@ -41,7 +41,6 @@ export default function CreateListingPage() {
 
   // Handle changes for the photo URL input array
   const handlePhotoChange = (index: number, value: string) => {
-    // CORRECTED: Accessing and setting the correct 'photoUrls' property
     const newPhotoUrls = [...formData.photoUrls];
     newPhotoUrls[index] = value;
     setFormData((prev) => ({
@@ -54,7 +53,6 @@ export default function CreateListingPage() {
   const addPhotoInput = () => {
     setFormData((prev) => ({
       ...prev,
-      // CORRECTED: Accessing the correct 'photoUrls' property
       photoUrls: [...prev.photoUrls, ''], 
     }));
   };
@@ -76,24 +74,39 @@ export default function CreateListingPage() {
       // Filter out empty photo URLs before submission
       const dataToSubmit = {
         ...formData,
-        // The API call now uses the corrected 'photoUrls' property from the state
         photoUrls: formData.photoUrls.filter(url => url.trim() !== ''),
       };
 
-      // The backend expects an object matching the NewListingData structure
       const response = await listingsApi.create(dataToSubmit);
       
-      setSuccess('Listing created successfully! Redirecting...');
+      // LOG: Log success response for debugging the structure
+      console.log("Listing created successfully. API response:", response.data);
+
+      // FIX: Use optional chaining to safely check nested and flat response structures,
+      // checking for both '_id' (Mongoose default) and 'id' (standard REST)
+      const newListingId = response.data.data?.id 
+                           || response.data.data?._id 
+                           || response.data.id 
+                           || response.data._id;
       
-      // Assuming the response contains the new listing ID, redirect to the details page
-      const newListingId = response.data.data._id; // Adjust based on your backend response structure
+      if (!newListingId) {
+          // If the ID cannot be found in the expected places, throw a specific error
+          throw new Error('Listing created, but could not extract the new listing ID for redirection.');
+      }
+
+      setSuccess('Listing created successfully! Redirecting...');
       
       setTimeout(() => {
         router.push(`/listings/${newListingId}`);
       }, 1500);
 
     } catch (err: any) {
-      const errorMessage = err.response?.data?.message || 'Failed to create listing. Please ensure you are logged in.';
+      // Catch blocks now handles API errors OR internal errors (like missing ID extraction)
+      console.error('Submission or Redirection failed:', err);
+      const errorMessage = err.message.includes('listing ID') 
+        ? err.message // Display the specific ID extraction failure message
+        : err.response?.data?.message || 'Failed to create listing. Please ensure you are logged in.';
+        
       setError(errorMessage);
     } finally {
       setLoading(false);
@@ -166,6 +179,19 @@ export default function CreateListingPage() {
             />
           </div>
           
+          {/* Host Name */}
+          <div>
+            <label htmlFor="hostName" className="block mb-1 font-semibold text-gray-700">Host Name</label>
+            <input 
+              type="text" 
+              id="hostName" 
+              name="hostName"
+              value={formData.hostName} 
+              onChange={handleChange} 
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-red-500 focus:border-red-500" 
+              placeholder="Your name"
+            />
+          </div>
         </div>
 
         {/* Photos (URLs) */}
