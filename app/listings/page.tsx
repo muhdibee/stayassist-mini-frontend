@@ -14,6 +14,9 @@ interface Listing {
   hostName: string;
 }
 
+// Access the environment variable
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'Backend URL Not Set';
+
 export default function ListingsPage() {
   const [listings, setListings] = useState<Listing[]>([]);
   const [loading, setLoading] = useState(true);
@@ -27,8 +30,10 @@ export default function ListingsPage() {
       // Send parameters to your backend for city and date filtering
       const response = await listingsApi.getAll(params);
       console.log('Fetched listings:', response.data);
+              setError(`Failed to fetch listings from ${BACKEND_URL}. Please try again.`);
       setListings(response.data); 
     } catch (err: any) {
+        setError(`Failed to fetch listings from ${BACKEND_URL}. Please try again.`);
       setError('Failed to fetch listings. Please try again.');
     } finally {
       setLoading(false);

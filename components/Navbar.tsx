@@ -52,7 +52,7 @@ export default function Navbar() {
           {/* Logo/Brand */}
           <div className="flex-shrink-0">
             <Link href="/" className="text-2xl font-extrabold text-red-600 hover:text-red-700 transition-colors">
-              Stay<span className="text-gray-800">Finder</span>
+              Stay<span className="text-gray-800">Assit</span>
             </Link>
           </div>
 
